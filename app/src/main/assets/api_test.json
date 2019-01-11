@@ -1,0 +1,21 @@
+{
+   "success":true,
+   "message":"Success",
+   "profiles":[
+      {
+         "id":1,
+         "name":"Maulana Firdaus",
+         "photo":"http://cdn01.androidauthority.net/wp-content/uploads/2017/08/animation-play-protect.gif"
+      },
+      {
+         "id":2,
+         "name":"Fadil",
+         "photo":"https://lngost.github.io/pages/articles/others/XcodeGhost-review/images/xcode-img.png"
+      },
+      {
+         "id":3,
+         "name":"Andedi",
+         "photo":"http://www.unixstickers.com/image/data/stickers/codeigniter/code-igniter.sh.png"
+      }
+   ]
+}
