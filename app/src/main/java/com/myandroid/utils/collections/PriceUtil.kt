@@ -26,4 +26,20 @@ object PriceUtil {
         decimalFormat.decimalFormatSymbols = decimalFormatSymbols
         return decimalFormat.format(longData)
     }
+
+    fun formatWithSymbol(price: Long?): String {
+        val decimalFormatSymbols = DecimalFormatSymbols()
+        decimalFormatSymbols.groupingSeparator = '.'
+        val decimalFormat = DecimalFormat()
+        decimalFormat.decimalFormatSymbols = decimalFormatSymbols
+        return "Rp. " + decimalFormat.format(price)
+    }
+
+    fun formatWithoutSymbol(price: Long?): String {
+        val decimalFormatSymbols = DecimalFormatSymbols()
+        decimalFormatSymbols.groupingSeparator = '.'
+        val decimalFormat = DecimalFormat()
+        decimalFormat.decimalFormatSymbols = decimalFormatSymbols
+        return decimalFormat.format(price)
+    }
 }
