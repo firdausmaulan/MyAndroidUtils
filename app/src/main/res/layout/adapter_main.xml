@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:elevation="1dp"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:padding="8dp">
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivNews"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        tools:src="@mipmap/ic_launcher" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/ivDelete"
+        android:layout_toLeftOf="@+id/ivDelete"
+        android:layout_toEndOf="@+id/ivNews"
+        android:layout_toRightOf="@+id/ivNews"
+        tools:text="@string/app_name" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivDelete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@android:drawable/ic_delete" />
+
+</RelativeLayout>
