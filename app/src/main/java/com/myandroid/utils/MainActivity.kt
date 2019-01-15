@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), MainView {
     private var searchQuery: String? = null
 
     // View
-    private lateinit var adapterMain: AdapterMain
+    private lateinit var mainAdapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     private fun initView() {
-        adapterMain = AdapterMain()
-        recyclerView.adapter = adapterMain
+        mainAdapter = MainAdapter()
+        recyclerView.adapter = mainAdapter
         recyclerView.addOnScrollListener(scrollListener())
     }
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), MainView {
                     searchQuery = query
                     searchQuery?.let {
                         if (it.isEmpty() || it.length > 2) {
-                            adapterMain.clearList()
+                            mainAdapter.clearList()
                             pageNumber = 1
                             presenter.getNewsData(pageNumber, searchQuery)
                             recyclerView.addOnScrollListener(scrollListener())
@@ -70,21 +70,21 @@ class MainActivity : AppCompatActivity(), MainView {
                 }
 
         refreshLayout.setOnRefreshListener {
-            adapterMain.clearList()
+            mainAdapter.clearList()
             pageNumber = 1
             presenter.getNewsData(pageNumber, searchQuery)
             recyclerView.addOnScrollListener(scrollListener())
         }
 
-        adapterMain.setClickListener(object : OnItemClickListener<Article> {
+        mainAdapter.setClickListener(object : OnItemClickListener<Article> {
             override fun onItemClick(item: Article) {
                 openNewsOnBrowser(item.url)
             }
         })
 
-        adapterMain.setDeleteListener(object : OnItemDeleteListener<Article> {
+        mainAdapter.setDeleteListener(object : OnItemDeleteListener<Article> {
             override fun onItemDelete(item: Article, position: Int) {
-                adapterMain.delete(item, position)
+                mainAdapter.delete(item, position)
             }
         })
 
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showNews(articles: List<Article>) {
-        adapterMain.addList(articles)
-        Log.d("list size", adapterMain.itemCount.toString())
+        mainAdapter.addList(articles)
+        Log.d("list size", mainAdapter.itemCount.toString())
     }
 }

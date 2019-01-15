@@ -13,7 +13,7 @@ import android.support.v7.util.DiffUtil
 import com.myandroid.utils.listener.OnItemClickListener
 import com.myandroid.utils.listener.OnItemDeleteListener
 
-class AdapterMain : RecyclerView.Adapter<AdapterMain.ViewHolder>() {
+class MainAdapter : RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
     private val listArticle = mutableListOf<Article>()
 
@@ -56,7 +56,7 @@ class AdapterMain : RecyclerView.Adapter<AdapterMain.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): AdapterMain.ViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): MainAdapter.ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
         val view = inflater.inflate(R.layout.adapter_main, viewGroup, false)
         return ViewHolder(view) // this adapter view holder inner class
