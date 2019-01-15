@@ -10,11 +10,9 @@ import android.graphics.Paint.FILTER_BITMAP_FLAG
 import com.myandroid.utils.BaseApp
 import com.myandroid.utils.R
 
-class ImageUtil {
+object ImageUtil {
 
-    companion object {
-        val thumbSize = 256
-    }
+    val thumbSize = 256
 
     fun load(url: String?, imageView: ImageView?) {
         Picasso.get()

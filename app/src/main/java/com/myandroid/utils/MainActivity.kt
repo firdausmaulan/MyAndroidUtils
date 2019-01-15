@@ -52,22 +52,22 @@ class MainActivity : AppCompatActivity(), MainView {
     @SuppressLint("CheckResult")
     private fun initAction() {
         RxTextView.textChanges(etSearch)
-            .skip(1)
-            .debounce(1, TimeUnit.SECONDS)
-            .map { charSequence -> charSequence.toString() }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe { query ->
-                searchQuery = query
-                searchQuery?.let {
-                    if (it.isEmpty() || it.length > 2) {
-                        adapterMain.clearList()
-                        pageNumber = 1
-                        presenter.getNewsData(pageNumber, searchQuery)
-                        recyclerView.addOnScrollListener(scrollListener())
+                .skip(1)
+                .debounce(1, TimeUnit.SECONDS)
+                .map { charSequence -> charSequence.toString() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe { query ->
+                    searchQuery = query
+                    searchQuery?.let {
+                        if (it.isEmpty() || it.length > 2) {
+                            adapterMain.clearList()
+                            pageNumber = 1
+                            presenter.getNewsData(pageNumber, searchQuery)
+                            recyclerView.addOnScrollListener(scrollListener())
+                        }
                     }
                 }
-            }
 
         refreshLayout.setOnRefreshListener {
             adapterMain.clearList()
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
         adapterMain.setClickListener(object : OnItemClickListener<Article> {
             override fun onItemClick(item: Article) {
-
+                openNewsOnBrowser(item.url)
             }
         })
 
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), MainView {
             }
         })
 
-        KeyboardUtil().hideKeyboardOnScroll(recyclerView)
+        KeyboardUtil.hideKeyboardOnScroll(recyclerView)
     }
 
     private fun scrollListener(): EndlessOnScrollListener {

@@ -32,11 +32,12 @@ class AdapterMain : RecyclerView.Adapter<AdapterMain.ViewHolder>() {
     }
 
     fun addList(articles: List<Article>) {
-        listArticle.addAll(articles)
-        notifyDataSetChanged()
+        for (i in 0 until articles.size) {
+            listArticle.add(articles[i])
+            notifyItemInserted(listArticle.size - 1)
+        }
     }
 
-    // TODO add sort menu to use this method
     fun updateList(articles: List<Article>) {
         val diffCallback = ArticleDiffCallback(this.listArticle, articles)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -68,7 +69,7 @@ class AdapterMain : RecyclerView.Adapter<AdapterMain.ViewHolder>() {
         var ivDelete: ImageView? = itemView.ivDelete
 
         fun bind(article: Article) {
-            ImageUtil().thumbLoad(article.urlToImage, ivNews)
+            ImageUtil.thumbLoad(article.urlToImage, ivNews)
             tvTitle?.text = article.title
 
             itemView.setOnClickListener {

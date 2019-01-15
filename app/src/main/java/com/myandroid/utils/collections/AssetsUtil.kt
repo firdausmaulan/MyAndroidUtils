@@ -3,7 +3,7 @@ package com.myandroid.utils.collections
 import com.myandroid.utils.BaseApp
 import java.io.IOException
 
-class AssetsUtil {
+object AssetsUtil {
     fun loadJSONFromAsset(): String? {
         val json: String?
         try {
