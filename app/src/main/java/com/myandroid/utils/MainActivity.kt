@@ -1,6 +1,7 @@
 package com.myandroid.utils
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -44,8 +45,16 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     private fun initView() {
+        setRecyclerView()
         mainAdapter = MainAdapter()
         recyclerView.adapter = mainAdapter
+        recyclerView.addOnScrollListener(scrollListener())
+    }
+
+    private fun setRecyclerView() {
+        refreshLayout.setColorSchemeColors(Color.WHITE, Color.WHITE)
+        refreshLayout.setWaveColor(Color.argb(255, 33, 150, 243))
+        refreshLayout.setMaxDropHeight(75)
         recyclerView.addOnScrollListener(scrollListener())
     }
 
@@ -64,7 +73,7 @@ class MainActivity : AppCompatActivity(), MainView {
                             mainAdapter.clearList()
                             pageNumber = 1
                             presenter.getNewsData(pageNumber, searchQuery)
-                            recyclerView.addOnScrollListener(scrollListener())
+                            setRecyclerView()
                         }
                     }
                 }
@@ -73,7 +82,7 @@ class MainActivity : AppCompatActivity(), MainView {
             mainAdapter.clearList()
             pageNumber = 1
             presenter.getNewsData(pageNumber, searchQuery)
-            recyclerView.addOnScrollListener(scrollListener())
+            setRecyclerView()
         }
 
         mainAdapter.setClickListener(object : OnItemClickListener<Article> {
