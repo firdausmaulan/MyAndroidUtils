@@ -1,13 +1,18 @@
 package com.myandroid.utils
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.myandroid.utils.collections.Constants
 import com.myandroid.utils.collections.EndlessOnScrollListener
 import com.myandroid.utils.collections.KeyboardUtil
+import com.myandroid.utils.collections.LogUtil
 import com.myandroid.utils.dataSource.remote.repository.Repository
 import com.myandroid.utils.listener.OnItemClickListener
 import com.myandroid.utils.listener.OnItemDeleteListener
@@ -45,44 +50,36 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     private fun initView() {
-        setRecyclerView()
         mainAdapter = MainAdapter()
         recyclerView.adapter = mainAdapter
-        recyclerView.addOnScrollListener(scrollListener())
-    }
-
-    private fun setRecyclerView() {
-        refreshLayout.setColorSchemeColors(Color.WHITE, Color.WHITE)
-        refreshLayout.setWaveColor(Color.argb(255, 33, 150, 243))
-        refreshLayout.setMaxDropHeight(75)
         recyclerView.addOnScrollListener(scrollListener())
     }
 
     @SuppressLint("CheckResult")
     private fun initAction() {
         RxTextView.textChanges(etSearch)
-                .skip(1)
-                .debounce(1, TimeUnit.SECONDS)
-                .map { charSequence -> charSequence.toString() }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe { query ->
-                    searchQuery = query
-                    searchQuery?.let {
-                        if (it.isEmpty() || it.length > 2) {
-                            mainAdapter.clearList()
-                            pageNumber = 1
-                            presenter.getNewsData(pageNumber, searchQuery)
-                            setRecyclerView()
-                        }
+            .skip(1)
+            .debounce(1, TimeUnit.SECONDS)
+            .map { charSequence -> charSequence.toString() }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe { query ->
+                searchQuery = query
+                searchQuery?.let {
+                    if (it.isEmpty() || it.length > 2) {
+                        mainAdapter.clearList()
+                        pageNumber = 1
+                        presenter.getNewsData(pageNumber, searchQuery)
+                        recyclerView.addOnScrollListener(scrollListener())
                     }
                 }
+            }
 
         refreshLayout.setOnRefreshListener {
             mainAdapter.clearList()
             pageNumber = 1
             presenter.getNewsData(pageNumber, searchQuery)
-            setRecyclerView()
+            recyclerView.addOnScrollListener(scrollListener())
         }
 
         mainAdapter.setClickListener(object : OnItemClickListener<Article> {
@@ -122,4 +119,25 @@ class MainActivity : AppCompatActivity(), MainView {
         mainAdapter.addList(articles)
         Log.d("list size", mainAdapter.itemCount.toString())
     }
+
+    /*private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val otpPhoneNumber = intent.extras.getString(Constants.OTP_PHONE_NUMBER)
+            val otpSmsBody = intent.extras.getString(Constants.OTP_MESSAGE)
+            if (otpPhoneNumber == "08990224950") {
+                val otp = otpSmsBody.split("\\s+".toRegex())[3]
+                LogUtil.d(otp)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(broadcastReceiver, IntentFilter(Constants.TAG_SMS_RECEIVER));
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(broadcastReceiver)
+    }*/
 }

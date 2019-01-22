@@ -28,13 +28,9 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.0.1'
     implementation "com.android.support:recyclerview-v7:27.0.1"
-
-    // CUSTOM VIEW
-    //implementation 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
-    implementation project(':library')
-
     implementation "com.squareup.picasso:picasso:2.71828"
     implementation "id.zelory:compressor:2.1.0"
+
     implementation "com.jakewharton.rxbinding2:rxbinding:2.1.1"
 
     // NETWORK
